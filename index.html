@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPOR – pacing og video</title>
+    <script type="module" crossorigin src="/langrenn_web/assets/main-a-dMX5c4.js"></script>
+    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-DMK2opQg.css">
+  </head>
+  <body>
+    <header class="appnav">
+      <a class="brand" href="#/">SPOR<small>pacing og video</small></a>
+      <a href="#/" aria-current="page">Analyser</a>
+      <a href="./fasit.html" id="nav-fasit">Fasit-verktøy</a>
+      <span class="spacer"></span>
+      <span class="tag-proto">Prototype</span>
+    </header>
+    <main>
+      <section id="dashboard" hidden>
+        <div class="dash-head">
+          <div>
+            <h1>Velkommen tilbake</h1>
+            <p class="muted">Analysene og filene lagres bare i denne nettleseren. Ingenting lastes opp.</p>
+          </div>
+          <button id="new-analysis" class="primary xl blueprint" type="button">+ Ny analyse<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></button>
+        </div>
+        <div class="section-head">
+          <h6 class="label">Analyser</h6>
+          <div class="seg" title="Kort- og kalendervisning kommer">
+            <span class="seg-opt" style="background: var(--color-accent); color: var(--color-bg)">Liste</span>
+            <span class="seg-opt off">Kort</span>
+            <span class="seg-opt off">Kalender</span>
+          </div>
+        </div>
+        <table id="analyses" class="list"></table>
+        <div id="empty" class="blueprint empty" hidden>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <h2>Ingen analyser ennå</h2>
+          <p class="muted">Start med GPX-fila fra klokka. Videoer kan legges til etterpå.</p>
+          <button id="new-analysis-2" type="button">Ny analyse</button>
+        </div>
+      </section>
+
+      <section id="workspace" hidden>
+        <div class="topbar">
+          <a class="back" href="#/">← Dashboard</a>
+          <span class="vsep"></span>
+          <div class="title">
+            <h1 id="analysis-name"></h1>
+          </div>
+          <div id="saves" class="tune"></div>
+        </div>
+        <ol id="stepper" class="stepper"></ol>
+        <section id="step-source" hidden>
+          <h2>Hent aktivitet</h2>
+          <p class="note">Hvor skal økta eller rennet hentes fra?</p>
+          <div class="sources">
+            <div class="source blueprint disabled"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <h3>Garmin</h3>
+              <p>Hent aktiviteten rett fra Garmin Connect.</p>
+              <span class="badge">Kommer</span>
+            </div>
+            <div class="source blueprint disabled"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <h3>Strava</h3>
+              <p>Hent aktiviteten rett fra Strava.</p>
+              <span class="badge">Kommer</span>
+            </div>
+            <label class="source blueprint accent" id="drop-gpx"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <h3>Last opp fil</h3>
+              <p>GPX-fil fra klokka. Dra fila hit, eller klikk for å velge.</p>
+              <span class="badge on">Velg fil</span>
+              <input id="gpx-source-input" type="file" accept=".gpx" multiple hidden />
+            </label>
+          </div>
+        </section>
+        <section id="step-video" hidden>
+          <div class="vgrid">
+            <div>
+              <h1>Velg videoer</h1>
+              <p class="muted">Videoene plasseres i løypa ut fra opptakstid og GPS. Du kan også hoppe over og legge til video senere.</p>
+              <div id="athletes"></div>
+              <label class="drop blueprint" id="drop-video"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                <b>Slipp videoer her</b>
+                <span class="muted">eller velg filer · .mov, .mp4</span>
+                <input id="video-source-input" type="file" accept="video/*,.mov,.mp4" multiple hidden />
+              </label>
+            </div>
+            <div>
+              <div class="list-head"><h6 class="label" id="videos-head">Videoer</h6><span class="muted" id="videos-sum"></span></div>
+              <button id="review-open" class="primary" type="button" hidden>Se gjennom videoene og velg utøver</button>
+              <ul id="video-status" class="vlist"></ul>
+              <div class="actions-row"><button id="video-next" class="primary lg" type="button">Fortsett →</button></div>
+            </div>
+          </div>
+        </section>
+        <div id="step-main">
+        <input id="gpx-input" type="file" accept=".gpx" multiple hidden />
+        <input id="video-input" type="file" accept="video/*,.mov,.mp4" multiple hidden />
+        <div id="clips" class="note" hidden></div>
+        <div id="files"></div>
+        <p id="hint" class="note"></p>
+        <div id="route"></div>
+        <div class="actions-row runde-only"><button id="runde-next" class="primary lg" type="button">Fortsett til videoer →</button></div>
+        <div class="row1">
+          <div class="mapcol">
+            <h6 class="label">Kart</h6>
+            <div id="map"></div>
+          </div>
+          <div class="vidcol">
+            <h6 class="label">Video</h6>
+            <div id="videos"></div>
+          </div>
+        </div>
+        <div id="controls" class="controls"></div>
+        <input id="scrub" type="range" min="0" max="0" step="1" value="0" disabled />
+        <div id="timeline"></div>
+        <div id="readout" class="note"></div>
+        <div id="chart"></div>
+        <table id="stats"></table>
+        </div>
+      </section>
+    </main>
+    <footer class="licenses">
+      Prototype. Alt behandles i nettleseren din; ingenting lastes opp. Frekvens og teknikk er AI-estimater.
+      Bruker <a href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noopener">ffmpeg.wasm</a>
+      (FFmpeg, <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener">GPL-2.0-or-later</a>,
+      kildekode: <a href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noopener">ffmpeg.wasm</a> og <a href="https://ffmpeg.org/download.html" target="_blank" rel="noopener">ffmpeg.org</a>),
+      <a href="https://ai.google.dev/edge/mediapipe" target="_blank" rel="noopener">MediaPipe</a> (Apache-2.0),
+      <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a> (BSD-2-Clause),
+      <a href="https://github.com/leeoniya/uPlot" target="_blank" rel="noopener">uPlot</a> (MIT). Kart © OpenStreetMap-bidragsytere.
+    </footer>
+    <div id="progress" class="progress" hidden></div>
+  </body>
+</html>
