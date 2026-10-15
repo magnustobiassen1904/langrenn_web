@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPOR – pacing og video</title>
-    <script type="module" crossorigin src="/langrenn_web/assets/main-z5d7b_-6.js"></script>
-    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-DMK2opQg.css">
+    <script type="module" crossorigin src="/langrenn_web/assets/main-gzHpc1ZN.js"></script>
+    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-CaMv5M64.css">
   </head>
   <body>
     <header class="appnav">
@@ -52,8 +52,15 @@
         </div>
         <ol id="stepper" class="stepper"></ol>
         <section id="step-source" hidden>
-          <h2>Hent aktivitet</h2>
-          <p class="note">Hvor skal økta eller rennet hentes fra?</p>
+          <h2>1. Last opp GPX</h2>
+          <p class="lead">Velg GPX-fila fra klokka. Har flere gått sammen, velg alle filene.</p>
+          <div id="gpx-loaded" hidden>
+            <div id="gpx-list"></div>
+            <div class="wizard-next"><button id="gpx-next" class="primary xl" type="button">Neste: marker runden →</button></div>
+            <p class="note">Flere utøvere? Legg til flere GPX-filer under.</p>
+          </div>
+          <label class="primary xl upload-big" id="upload-big">Velg GPX-fil<input id="gpx-big-input" type="file" accept=".gpx" multiple hidden /></label>
+          <p class="note">… eller dra fila hit.</p>
           <div class="sources">
             <div class="source blueprint disabled"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <h3>Garmin</h3>
@@ -73,11 +80,15 @@
             </label>
           </div>
         </section>
+        <section id="step-koble" hidden>
+          <h2>5. Koble videoene</h2>
+          <p class="lead">Velg hvilken runde hver video hører til. Sjekk at prikken på kartet står der utøveren er, og trykk «Stemmer ✓».</p>
+        </section>
         <section id="step-video" hidden>
           <div class="vgrid">
             <div>
-              <h1>Velg videoer</h1>
-              <p class="muted">Videoene plasseres i løypa ut fra opptakstid og GPS. Du kan også hoppe over og legge til video senere.</p>
+              <h1>4. Legg til videoer</h1>
+              <p class="lead">Velg videoene fra økta. Etterpå kobler du hver video til riktig runde.</p>
               <div id="athletes"></div>
               <label class="drop blueprint" id="drop-video"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
@@ -101,7 +112,10 @@
         <div id="files"></div>
         <p id="hint" class="note"></p>
         <div id="route"></div>
-        <div class="actions-row runde-only"><button id="runde-next" class="primary lg" type="button">Fortsett til videoer →</button></div>
+        <div class="wizard-next runder-only">
+          <button id="runde-skip" class="ghost" type="button">Hopp over video → analysen</button>
+          <button id="runde-next" class="primary xl" type="button">Neste: legg til videoer →</button>
+        </div>
         <div class="row1">
           <div class="mapcol">
             <h6 class="label">Kart</h6>
