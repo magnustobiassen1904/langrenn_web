@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPOR – pacing og video</title>
-    <script type="module" crossorigin src="/langrenn_web/assets/main-gzHpc1ZN.js"></script>
-    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-CaMv5M64.css">
+    <script type="module" crossorigin src="/langrenn_web/assets/main-BgiJuoZ_.js"></script>
+    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-UPzclz4p.css">
   </head>
   <body>
     <header class="appnav">
@@ -51,13 +51,14 @@
           <div id="saves" class="tune"></div>
         </div>
         <ol id="stepper" class="stepper"></ol>
+        <p class="stepper-note">Du kan trykke på et steg for å gå tilbake. Det du har gjort i de andre stegene, blir liggende.</p>
         <section id="step-source" hidden>
           <h2>1. Last opp GPX</h2>
           <p class="lead">Velg GPX-fila fra klokka. Har flere gått sammen, velg alle filene.</p>
           <div id="gpx-loaded" hidden>
             <div id="gpx-list"></div>
             <div class="wizard-next"><button id="gpx-next" class="primary xl" type="button">Neste: marker runden →</button></div>
-            <p class="note">Flere utøvere? Legg til flere GPX-filer under.</p>
+            <button id="gpx-more" type="button">+ GPX for flere utøvere</button>
           </div>
           <label class="primary xl upload-big" id="upload-big">Velg GPX-fil<input id="gpx-big-input" type="file" accept=".gpx" multiple hidden /></label>
           <p class="note">… eller dra fila hit.</p>
