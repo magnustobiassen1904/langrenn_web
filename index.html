@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPOR – pacing og video</title>
-    <script type="module" crossorigin src="/langrenn_web/assets/main-BgiJuoZ_.js"></script>
-    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-UPzclz4p.css">
+    <script type="module" crossorigin src="/langrenn_web/assets/main-DNkpIhF5.js"></script>
+    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-4GwjttpN.css">
   </head>
   <body>
     <header class="appnav">
@@ -51,7 +51,6 @@
           <div id="saves" class="tune"></div>
         </div>
         <ol id="stepper" class="stepper"></ol>
-        <p class="stepper-note">Du kan trykke på et steg for å gå tilbake. Det du har gjort i de andre stegene, blir liggende.</p>
         <section id="step-source" hidden>
           <h2>1. Last opp GPX</h2>
           <p class="lead">Velg GPX-fila fra klokka. Har flere gått sammen, velg alle filene.</p>
@@ -117,6 +116,7 @@
           <button id="runde-skip" class="ghost" type="button">Hopp over video → analysen</button>
           <button id="runde-next" class="primary xl" type="button">Neste: legg til videoer →</button>
         </div>
+        <div id="tour-start"></div>
         <div class="row1">
           <div class="mapcol">
             <h6 class="label">Kart</h6>
@@ -131,8 +131,14 @@
         <input id="scrub" type="range" min="0" max="0" step="1" value="0" disabled />
         <div id="timeline"></div>
         <div id="readout" class="note"></div>
+        <div id="ref-pick"></div>
         <div id="chart"></div>
-        <table id="stats"></table>
+        <div id="seg-range"></div>
+        <div class="stats-row">
+          <table id="stats"></table>
+          <div id="terrain"></div>
+        </div>
+        <div id="insight"></div>
         </div>
       </section>
     </main>
