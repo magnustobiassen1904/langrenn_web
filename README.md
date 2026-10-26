@@ -1,6 +1,6 @@
-# SPOR – pacing og video (prototype)
+# AnalytiX – pacing og video (prototype)
 
-Ferdigbygget versjon av SPOR for testing: https://magnustobiassen1904.github.io/langrenn_web/
+Ferdigbygget versjon av AnalytiX for testing: https://magnustobiassen1904.github.io/langrenn_web/
 
 Alt behandles i nettleseren; GPX-er og videoer du velger selv lastes ikke opp noe sted.
 Unntak: analyser under del/ er lagt ut med utøvernes ønske, så de kan åpnes med en lenke (uten puls).

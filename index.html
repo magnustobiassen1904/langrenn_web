@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPOR – pacing og video</title>
-    <script type="module" crossorigin src="/langrenn_web/assets/main-C39z2q_N.js"></script>
-    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-7z-Uz5SU.css">
+    <title>AnalytiX – pacing og video</title>
+    <script type="module" crossorigin src="/langrenn_web/assets/main-s7r05fhA.js"></script>
+    <link rel="stylesheet" crossorigin href="/langrenn_web/assets/main-CFOfpW52.css">
   </head>
   <body>
     <header class="appnav">
-      <a class="brand" href="#/">SPOR<small>pacing og video</small></a>
+      <a class="brand" href="#/">AnalytiX<small>pacing og video</small></a>
       <a href="#/" aria-current="page">Analyser</a>
       <a href="./fasit.html" id="nav-fasit">Fasit-verktøy</a>
       <span class="spacer"></span>
@@ -26,12 +26,12 @@
         </div>
         <div class="section-head">
           <h6 class="label">Analyser</h6>
-          <div class="seg" title="Kort- og kalendervisning kommer">
-            <span class="seg-opt" style="background: var(--color-accent); color: var(--color-bg)">Liste</span>
-            <span class="seg-opt off">Kort</span>
-            <span class="seg-opt off">Kalender</span>
+          <div class="seg" id="view-seg">
+            <button type="button" class="seg-opt" data-view="kort">Kort</button>
+            <button type="button" class="seg-opt" data-view="liste">Liste</button>
           </div>
         </div>
+        <div id="cards" class="acards"></div>
         <table id="analyses" class="list"></table>
         <div id="empty" class="blueprint empty" hidden>
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -53,31 +53,16 @@
         <ol id="stepper" class="stepper"></ol>
         <section id="step-source" hidden>
           <h2>1. Last opp GPX</h2>
-          <p class="lead">Velg GPX-fila fra klokka. Har flere gått sammen, velg alle filene.</p>
+          <p class="lead">Velg GPX-filene til alle utøverne.</p>
+          <label class="big-drop" id="drop-gpx">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <b>Velg GPX</b>
+            <input id="gpx-big-input" type="file" accept=".gpx" multiple hidden />
+          </label>
           <div id="gpx-loaded" hidden>
             <div id="gpx-list"></div>
-            <div class="wizard-next"><button id="gpx-next" class="primary xl" type="button">Neste: marker runden →</button></div>
-            <button id="gpx-more" type="button">+ GPX for flere utøvere</button>
-          </div>
-          <label class="primary xl upload-big" id="upload-big">Velg GPX-fil<input id="gpx-big-input" type="file" accept=".gpx" multiple hidden /></label>
-          <p class="note">… eller dra fila hit.</p>
-          <div class="sources">
-            <div class="source blueprint disabled"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <h3>Garmin</h3>
-              <p>Hent aktiviteten rett fra Garmin Connect.</p>
-              <span class="badge">Kommer</span>
-            </div>
-            <div class="source blueprint disabled"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <h3>Strava</h3>
-              <p>Hent aktiviteten rett fra Strava.</p>
-              <span class="badge">Kommer</span>
-            </div>
-            <label class="source blueprint accent" id="drop-gpx"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <h3>Last opp fil</h3>
-              <p>GPX-fil fra klokka. Dra fila hit, eller klikk for å velge.</p>
-              <span class="badge on">Velg fil</span>
-              <input id="gpx-source-input" type="file" accept=".gpx" multiple hidden />
-            </label>
+            <ul id="gpx-pending" class="vlist"></ul>
+            <button id="gpx-more" class="ghost" type="button">+ Legg til flere</button>
           </div>
         </section>
         <section id="step-koble" hidden>
@@ -85,25 +70,15 @@
           <p class="lead">Velg hvilken runde hver video hører til. Sjekk at prikken på kartet står der utøveren er, og trykk «Stemmer ✓».</p>
         </section>
         <section id="step-video" hidden>
-          <div class="vgrid">
-            <div>
-              <h1>4. Legg til videoer</h1>
-              <p class="lead">Velg videoene fra økta. Etterpå kobler du hver video til riktig runde.</p>
-              <div id="athletes"></div>
-              <label class="drop blueprint" id="drop-video"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-                <b>Slipp videoer her</b>
-                <span class="muted">eller velg filer · .mov, .mp4</span>
-                <input id="video-source-input" type="file" accept="video/*,.mov,.mp4" multiple hidden />
-              </label>
-            </div>
-            <div>
-              <div class="list-head"><h6 class="label" id="videos-head">Videoer</h6><span class="muted" id="videos-sum"></span></div>
-              <button id="review-open" class="primary" type="button" hidden>Se gjennom videoene og velg utøver</button>
-              <ul id="video-status" class="vlist"></ul>
-              <div class="actions-row"><button id="video-next" class="primary lg" type="button">Fortsett →</button></div>
-            </div>
-          </div>
+          <h2>4. Legg til videoer</h2>
+          <p class="lead">Velg videoene fra økta.</p>
+          <label class="big-drop" id="drop-video">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <b>Velg videoer</b>
+            <input id="video-source-input" type="file" accept="video/*,.mov,.mp4" multiple hidden />
+          </label>
+          <ul id="video-status" class="vlist"></ul>
+          <button id="video-more" class="ghost" type="button" hidden>+ Legg til flere</button>
         </section>
         <div id="step-main">
         <input id="gpx-input" type="file" accept=".gpx" multiple hidden />
@@ -112,10 +87,6 @@
         <div id="files"></div>
         <p id="hint" class="note"></p>
         <div id="route"></div>
-        <div class="wizard-next runder-only">
-          <button id="runde-skip" class="ghost" type="button">Hopp over video → analysen</button>
-          <button id="runde-next" class="primary xl" type="button">Neste: legg til videoer →</button>
-        </div>
         <div id="tour-start"></div>
         <div class="row1">
           <div class="mapcol">
@@ -140,6 +111,10 @@
         </div>
         <div id="insight"></div>
         </div>
+        <nav id="wizard-nav" class="wizard-nav">
+          <button id="nav-back" type="button">← Tilbake</button>
+          <button id="nav-next" class="primary xl" type="button">Neste →</button>
+        </nav>
       </section>
     </main>
     <footer class="licenses">
